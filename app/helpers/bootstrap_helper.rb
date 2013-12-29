@@ -36,4 +36,8 @@ module BootstrapHelper
     content_tag("div", form_output, :class => "row col-md-12")
   end
   
+  def render_form_errors(object)
+    render("layouts/form_errors", :target => object)
+  end
+  
 end
