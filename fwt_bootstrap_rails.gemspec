@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = FwtBootstrapRails::VERSION
   spec.authors       = ["Matt Brooke-Smith"]
   spec.email         = ["matt@futureworkshops.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = "Helpers for using Bootstrap 3 with Rails"
+  spec.summary       = "Helpers for using Bootstrap 3 with Rails"
   spec.homepage      = ""
   spec.license       = "MIT"
 
