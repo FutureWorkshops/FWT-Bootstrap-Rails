@@ -8,8 +8,8 @@ module BootstrapHelper
     link_to raw("<span class='glyphicon glyphicon-trash'></span> #{text}"), path, :class => "btn btn-danger", :method => :delete, :data => { confirm: "Are you sure?" }  
   end
   
-  def delete_button(path)
-    button path, "Delete", "trash", :delete, :sm, { confirm: "Are you sure?" }
+  def delete_button(path, text = "Delete")
+    button path, text, "trash", :delete, :sm, { confirm: "Are you sure?" }
   end
   
   def edit_button(path)
