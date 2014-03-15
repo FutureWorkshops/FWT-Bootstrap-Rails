@@ -44,7 +44,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     html = "<div class='form-group'>"
     html << self.label(@object_name, name)
     html << "<br/>"
-    html << super(@object_name, name, options_for_select, {:include_blank => true}, :class => "form-control")
+    html << super(@object_name, name, options_for_select, {:include_blank => true})
     html << "</div>"
     raw(html)
   end
@@ -77,7 +77,15 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
         super(@object_name, name, *args)
       elsif method_name == :radio_button
         options[:checked] = (@object.send(name) == args[0])
-        super(@object_name, name, *(args << options))        
+        super(@object_name, name, *(args << options))
+      elsif method_name == :check_box
+        options = args.extract_options!
+        options[:checked] = (@object.send(name) == true)
+        @template.content_tag("div",
+          @template.label_tag(name) +
+          super(@object_name, name, *(args << options)),
+            {:class => "checkbox"}
+        ) 
       else
         options = args.extract_options!
         options[:class] = "form-control"
@@ -88,15 +96,13 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
           options[:cols] = 10
         end
         
-        if method_name == :check_box
-          options[:checked] = (@object.send(name) == true)
-        end
-      
         @template.content_tag("div",
-          @template.label_tag(name) +  
+          @template.label_tag(name) +
           super(@object_name, name, *(args << options)),
             {:class => "form-group"}
-        )           
+        ) 
+    
+          
       end
     end
   end
