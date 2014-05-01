@@ -68,7 +68,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     fields_for_object = @object.send(name)
         
     fields_for(fields_for_name, fields_for_object, {:builder => BootstrapFormBuilder}, &block)    
-    hidden_field(fields_for_name, :id, {:value => fields_for_object.id}) if fields_for_object
+    hidden_field(fields_for_name, :id, {:value => fields_for_object.id}) if fields_for_object && !fields_for_object.kind_of?(Hash)
   end
   
   def self.create_tagged_field(method_name)
@@ -89,7 +89,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
       else
         options = args.extract_options!
         options[:class] = "form-control"
-        options[:value] = @object.send(name)
+        options[:value] = @object.kind_of?(Hash) ? @object[name] : @object.send(name)
         
         if method_name == :text_area
           options[:rows] = 15
