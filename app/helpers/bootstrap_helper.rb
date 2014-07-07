@@ -24,16 +24,25 @@ module BootstrapHelper
     button path, "Refresh", "refresh", :post, nil        
   end
   
-  # todo - specify form builder as default
-  # and integrate this into the BootstrapFormBuilder
   def bootstrap_form_for(name, *args, &block)
     options = args.extract_options!
-    form_output = form_for(name, *(args << options.merge(:builder => BootstrapFormBuilder, :html => { :multipart => true }))) do |builder|
+    form_output = form_for(name, *(args << options.deep_merge(:builder => BootstrapFormBuilder, :html => { :multipart => true}))) do |builder|
       output = capture(builder, &block)      
       render_form_errors(builder.object) + content_tag("div", output, :class => "row col-md-5")      
     end
-  
+
     content_tag("div", form_output, :class => "row col-md-12")
+  end
+  
+  
+  def horizontal_bootstrap_form_for(name, *args, &block)
+    options = args.extract_options!
+    form_output = form_for(name, *(args << options.deep_merge(:builder => HorizontalBootstrapFormBuilder, :html => { :multipart => true, :class => "form-horizontal"}))) do |builder|
+      output = capture(builder, &block)      
+      render_form_errors(builder.object) + content_tag("div", output, :class => "row col-md-12")      
+    end
+
+    content_tag("div", form_output, :class => "row col-md-8")
   end
   
   def render_form_errors(object)
