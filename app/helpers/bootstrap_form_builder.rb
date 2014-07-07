@@ -4,6 +4,22 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   include ActionView::Helpers
   include ActionView::Context
   
+  def bootstrap_input(name, input, include_br = false)
+    @template.content_tag(
+      "div",
+      @template.label_tag(name) + input,
+      {:class => "form-group"}
+    ) 
+  end
+  
+  def bootstrap_checkbox(name, input)
+    @template.content_tag(
+      "div",
+      @template.label_tag(name) + input,
+      {:class => "checkbox"}
+    )
+  end
+  
   def cw_image_tag(name, carrierwave_version = :thumbnail, options = {})
     
     html = ""
@@ -41,26 +57,17 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   end
   
   def select(name, options_for_select, *args)
-    html = "<div class='form-group'>"
-    html << self.label(@object_name, name)
-    html << "<br/>"
-    html << super(@object_name, name, options_for_select, {:include_blank => true})
-    html << "</div>"
-    raw(html)
+    bootstrap_input(name, super(@object_name, name, options_for_select, {:include_blank => true}, {:class => "form-control"}), true)
   end
   
   def radio(name, values, options = {})    
-    html = "<div class='form-group'>"
-    html << self.label(@object_name, "Text overlay colour")
-    html << "<br/>"
+    html = ""
     values.each do |h|
       html << self.radio_button(name, h[0])
       html << " #{h[1]}"
       html << "<br/>"
-    	#html << "<br/> <input type='radio' name='#{name}' value='#{h[0]}' />&nbsp; #{h[1]}"
-    end
-    html << "</div>"
-    raw(html)
+    end    
+    bootstrap_input(name, raw(html))
   end
   
   def bootstrap_fields_for(name, *args, &block)
@@ -81,11 +88,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
       elsif method_name == :check_box
         options = args.extract_options!
         options[:checked] = (@object.send(name) == true)
-        @template.content_tag("div",
-          @template.label_tag(name) +
-          super(@object_name, name, *(args << options)),
-            {:class => "checkbox"}
-        ) 
+        bootstrap_checkbox(name, super(name, nil, *(args << options)))
       else
         options = args.extract_options!
         options[:class] = "form-control"
@@ -96,13 +99,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
           options[:cols] = 10
         end
         
-        @template.content_tag("div",
-          @template.label_tag(name) +
-          super(@object_name, name, *(args << options)),
-            {:class => "form-group"}
-        ) 
-    
-          
+        bootstrap_input(name, super(@object_name, name, *(args << options)))
       end
     end
   end
