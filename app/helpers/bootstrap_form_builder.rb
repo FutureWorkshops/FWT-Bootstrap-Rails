@@ -88,7 +88,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
       elsif method_name == :check_box
         options = args.extract_options!
         options[:checked] = (@object.send(name) == true)
-        bootstrap_checkbox(name, super(name, nil, *(args << options)))
+        bootstrap_checkbox(name, super(@object_name, name, *(args << options)))
       else
         options = args.extract_options!
         options[:class] = "form-control"
