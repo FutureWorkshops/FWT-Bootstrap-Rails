@@ -78,6 +78,10 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     hidden_field(fields_for_name, :id, {:value => fields_for_object.id}) if fields_for_object && !fields_for_object.kind_of?(Hash)
   end
   
+  def hidden_field(name, *args, &block)
+    super(@object_name, name, *(args << options.merge(:value => @object.send(name))))
+  end
+  
   def self.create_tagged_field(method_name)
     define_method(method_name) do |name, *args|
       if [:file_field, :select].include? method_name
