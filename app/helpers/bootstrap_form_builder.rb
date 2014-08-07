@@ -60,6 +60,10 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     bootstrap_input(name, super(@object_name, name, options_for_select, {:include_blank => true}, {:class => "form-control"}), true)
   end
   
+  def collection_select(name, collection, value_method, text_method, options = {})
+    bootstrap_input(name, super(@object_name, name, collection, value_method, text_method, options, {:class => "form-control"}))
+  end
+  
   def radio(name, values, options = {})    
     html = ""
     values.each do |h|
