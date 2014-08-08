@@ -56,8 +56,8 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     raw(html)
   end
   
-  def select(name, options_for_select, *args)
-    bootstrap_input(name, super(@object_name, name, options_for_select, {:include_blank => true}, {:class => "form-control"}), true)
+  def select(name, options_for_select, options = {})
+    bootstrap_input(name, super(@object_name, name, options_for_select, options, {:class => "form-control"}), true)
   end
   
   def collection_select(name, collection, value_method, text_method, options = {})
