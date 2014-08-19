@@ -10,4 +10,13 @@ describe BootstrapHelper do
     end
     
   end  
+
+  it "builds a styled button" do
+  	rendered = helper.styled_button("/root", "Detail", "pencil", :get, :sm, nil, "warning")
+
+  	expect(rendered).to have_tag('a', :with => { :href => '/root', :class => 'btn btn-warning btn-sm', :'data-method' => "get" }) do
+      with_tag "span", :with => { :class => "glyphicon glyphicon-pencil" }
+    end
+
+  end
 end

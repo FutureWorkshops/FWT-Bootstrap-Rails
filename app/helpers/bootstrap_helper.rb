@@ -1,7 +1,11 @@
 module BootstrapHelper
   
   def button(path, text, icon, method = :get, size = :sm, data = nil)
-    link_to raw("<span class='glyphicon glyphicon-#{icon}'></span> #{text}"), path, :class => "btn btn-default btn-#{size}", :method => method, :data => data  
+    link_to raw("<span class='glyphicon glyphicon-#{icon}'></span> #{text}"), path, :class => "btn btn-default btn-#{size}", :method => method, :data => data
+  end
+
+  def styled_button(path, text, icon, method = :get, size = :sm, data = nil, style)
+    link_to raw("<span class='glyphicon glyphicon-#{icon}'></span> #{text}"), path, :class => "btn btn-#{style} btn-#{size}", :method => method, :data => data
   end
   
   def red_delete_button(path, text)
